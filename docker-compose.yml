@@ -1,0 +1,11 @@
+services:
+  jupyter:
+    image: jupyter/scipy-notebook:latest
+    network_mode: host
+    volumes:
+      - .:/home/jovyan/work
+    environment:
+      - JUPYTER_TOKEN=
+      - DOCKER_STACKS_JUPYTER_CMD=notebook
+    command: start-notebook.sh --port=8889 --NotebookApp.token='' --NotebookApp.password=''
+    restart: unless-stopped
