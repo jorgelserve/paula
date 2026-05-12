@@ -1,24 +1,19 @@
-# ----------------------------------------
-# PROYECTO: CampusConnect
-# Versión Final - Entrega 2
-# Pensamiento Computacional
-# ----------------------------------------
-
-"""
-Elaborado por:
-Mariluz Botero Gómez
-María Paula Sarralde
-Docente: Juan Camilo Saldarriaga
-"""
-
-# Librería para generar números aleatorios
-import random
-
-# Librería para graficar
+#grafico a color
 import matplotlib.pyplot as plt
-
-# Librería para verificar si un archivo existe
+#genera datos aleatorios
+import random
+#lee archivos
 import os
+
+#se usa para mostrar el grafico
+import matplotlib
+matplotlib.use('TkAgg')
+
+print("Librerías importadas correctamente.")
+
+
+
+# Variables globales y datos
 
 # ----------------------------------------
 # LISTA PRINCIPAL DEL PERFIL
@@ -29,11 +24,11 @@ import os
 # ----------------------------------------
 perfil = [0, 0, 0, 0]
 
-# Nombres de las categorías para mostrar en pantalla
 nombresCategorias = ["Académicos", "Hobbies", "Sociales", "Actividades"]
 
 # Perfiles de otros estudiantes para comparar
 nombresEstudiantes = ["Ana", "Carlos", "Lucía", "Mateo", "Sofía"]
+#matrix (listas dentro lista)
 perfilesEstudiantes = [
     [5, 3, 7, 4],
     [2, 6, 4, 5],
@@ -42,12 +37,13 @@ perfilesEstudiantes = [
     [6, 4, 6, 2],
 ]
 
+print("Variables inicializadas. Perfil: " + str(perfil))
+print("Estudiantes disponibles: " + str(nombresEstudiantes))
 
-# ----------------------------------------
+
+# Funciones del sistema
+
 # FUNCIÓN 1: Registrar valores iniciales
-# Permite ingresar las 4 cantidades del perfil.
-# Incluye validación de valores negativos.
-# ----------------------------------------
 def registrarDatos():
     print(" ")
     print("--- REGISTRO DE DATOS ---")
@@ -65,10 +61,7 @@ def registrarDatos():
         print("Perfil registrado correctamente.")
 
 
-# ----------------------------------------
-# FUNCIÓN 2: Consultar valores actuales
-# Muestra los datos en formato de cuadrícula.
-# ----------------------------------------
+# FUNCIÓN 2: Consultar valores actuales (cuadrícula)
 def consultarDatos():
     print("-------------------------")
     print("AC: " + str(perfil[0]) + " | HO: " + str(perfil[1]))
@@ -77,11 +70,7 @@ def consultarDatos():
     print("-------------------------")
 
 
-# ----------------------------------------
-# FUNCIÓN 3: Actualizar una categoría específica
-# Permite modificar el valor de una sola categoría.
-# Incluye validación de categoría y valor negativo.
-# ----------------------------------------
+# FUNCIÓN 3: Actualizar una categoría
 def actualizarCategoria():
     print(" ")
     print("Categorías:")
@@ -101,10 +90,7 @@ def actualizarCategoria():
         print("Categoría incorrecta.")
 
 
-# ----------------------------------------
-# FUNCIÓN 4: Comparar afinidades
-# Muestra la categoría con mayor y menor valor.
-# ----------------------------------------
+# FUNCIÓN 4: Comparar afinidades (máximo y mínimo)
 def compararAfinidades():
     mayor = perfil[0]
     posMayor = 0
@@ -122,12 +108,7 @@ def compararAfinidades():
     print("Menor afinidad: " + nombresCategorias[posMenor] + " (" + str(menor) + ")")
 
 
-# ----------------------------------------
 # FUNCIÓN 5: Guardar o cargar datos
-# Sub-menú: elige si guardar o cargar.
-# El usuario elige el nombre del archivo.
-# Al cargar, valida que no haya valores negativos.
-# ----------------------------------------
 def guardarCargarDatos():
     print(" ")
     print("1) Guardar datos en archivo")
@@ -142,9 +123,11 @@ def guardarCargarDatos():
         print("Datos guardados en " + nombre)
     elif accion == 2:
         nombre = input("Nombre del archivo (ej: perfil.txt): ")
+        #busca si hay archivos guardados con este nombre
         if os.path.exists(nombre):
             archivo = open(nombre, "r")
             contenido = archivo.read()
+            #separa el texto por comas en las listas
             lista = contenido.split(",")
             val0 = int(lista[0])
             val1 = int(lista[1])
@@ -165,13 +148,7 @@ def guardarCargarDatos():
         print("Acción incorrecta.")
 
 
-# ----------------------------------------
 # FUNCIÓN 6: Clasificar una categoría
-# Clasifica según los rangos:
-# Menos de 3 = Bajo
-# Entre 3 y 7 = Moderado
-# Más de 7 = Alto
-# ----------------------------------------
 def clasificarCategoria():
     print(" ")
     print("Categorías:")
@@ -193,12 +170,7 @@ def clasificarCategoria():
         print("Categoría incorrecta.")
 
 
-# ----------------------------------------
 # FUNCIÓN 7: Comparar con otros estudiantes
-# Compara el perfil del usuario con los perfiles
-# hardcodeados y muestra con quién tiene más afinidad.
-# La afinidad se mide por diferencia total entre categorías.
-# ----------------------------------------
 def compararConPerfiles():
     menorDiferencia = 999
     nombreMasAfin = ""
@@ -217,23 +189,15 @@ def compararConPerfiles():
     print("Diferencia total: " + str(menorDiferencia))
 
 
-# ----------------------------------------
-# FUNCIÓN 8: Duplicar todos los valores
-# Multiplica por 2 el valor de cada categoría.
-# Utiliza un ciclo for para recorrer la lista.
-# ----------------------------------------
+# FUNCIÓN 8: Duplicar todos los valores (ciclo for)
+#cada resultado se duplica , osea se aumenta 2 a un rago por ej de 4 a 6
 def duplicarValores():
     for i in range(len(perfil)):
         perfil[i] = perfil[i] * 2
     print("Valores duplicados correctamente.")
 
 
-# ----------------------------------------
 # FUNCIÓN 9: Cambio aleatorio
-# Selecciona una categoría al azar y aumenta
-# o disminuye su valor en 1.
-# No permite que el valor baje de 0.
-# ----------------------------------------
 def cambioAleatorio():
     aleatorio = random.randint(0, 3)
     operacion = random.randint(1, 2)
@@ -248,10 +212,7 @@ def cambioAleatorio():
             print("No se puede disminuir: " + nombresCategorias[aleatorio] + " ya es 0.")
 
 
-# ----------------------------------------
 # FUNCIÓN 10: Graficar perfil
-# Muestra los datos en un gráfico de barras.
-# ----------------------------------------
 def graficar():
     x = nombresCategorias
     y = perfil
@@ -262,9 +223,30 @@ def graficar():
     plt.show()
 
 
-# ----------------------------------------
-# MENÚ PRINCIPAL
-# ----------------------------------------
+print("10 funciones cargadas correctamente.")
+
+
+
+# Archivo de datos de prueba
+archivo = open("datos.txt", "w")
+archivo.write("4,6,3,2")
+archivo.close()
+print("Archivo datos.txt creado con valores: 4, 6, 3, 2")
+print("Ubicación: " + os.path.abspath("datos.txt"))
+
+#Visualización de resultados
+# Cargar datos de ejemplo para la visualización
+perfil[0] = 2
+perfil[1] = 6
+perfil[2] = 3
+perfil[3] = 2
+
+print("Perfil de ejemplo: " + str(perfil))
+print()
+graficar()
+
+
+#Menu Principal
 while True:
     print(" ")
     print("===== CAMPUSCONNECT =====")

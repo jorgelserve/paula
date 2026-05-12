@@ -469,22 +469,25 @@ def guardarCargarDatos():
         print("Datos guardados en " + nombre)
     elif accion == 2:
         nombre = input("Nombre del archivo (ej: perfil.txt): ")
-        archivo = open(nombre, "r")
-        contenido = archivo.read()
-        lista = contenido.split(",")
-        val0 = int(lista[0])
-        val1 = int(lista[1])
-        val2 = int(lista[2])
-        val3 = int(lista[3])
-        if val0 < 0 or val1 < 0 or val2 < 0 or val3 < 0:
-            print("Error: El archivo contiene valores negativos. No se actualizaron los datos.")
+        if os.path.exists(nombre):
+            archivo = open(nombre, "r")
+            contenido = archivo.read()
+            lista = contenido.split(",")
+            val0 = int(lista[0])
+            val1 = int(lista[1])
+            val2 = int(lista[2])
+            val3 = int(lista[3])
+            if val0 < 0 or val1 < 0 or val2 < 0 or val3 < 0:
+                print("Error: El archivo contiene valores negativos. No se actualizaron los datos.")
+            else:
+                perfil[0] = val0
+                perfil[1] = val1
+                perfil[2] = val2
+                perfil[3] = val3
+                print("Datos cargados desde " + nombre)
+            archivo.close()
         else:
-            perfil[0] = val0
-            perfil[1] = val1
-            perfil[2] = val2
-            perfil[3] = val3
-            print("Datos cargados desde " + nombre)
-        archivo.close()
+            print("Error: El archivo " + nombre + " no existe.")
     else:
         print("Acción incorrecta.")
 
@@ -579,7 +582,7 @@ def cambioAleatorio():
 def graficar():
     x = nombresCategorias
     y = perfil
-    plt.bar(x, y)
+    plt.bar(x, y, color=["#2196F3", "#4CAF50", "#FF9800", "#E91E63"])
     plt.xlabel("Categorías")
     plt.ylabel("Cantidad")
     plt.title("Perfil Campus Connect")
