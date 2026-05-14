@@ -23,6 +23,7 @@ print("Librerías importadas correctamente.")
 # Posición 3 = Actividades universitarias
 # ----------------------------------------
 perfil = [0, 0, 0, 0]
+nombreUsuario = ""
 
 nombresCategorias = ["Académicos", "Hobbies", "Sociales", "Actividades"]
 
@@ -45,25 +46,33 @@ print("Estudiantes disponibles: " + str(nombresEstudiantes))
 
 # FUNCIÓN 1: Registrar valores iniciales
 def registrarDatos():
+    global nombreUsuario
     print(" ")
     print("--- REGISTRO DE DATOS ---")
+    nombreUsuario = input("Tu nombre: ")
+    print("(Ingresa valores entre 0 y 10)")
     acad = int(input("Cantidad de intereses académicos: "))
     hobb = int(input("Cantidad de hobbies: "))
     soci = int(input("Cantidad de afinidades sociales: "))
     acti = int(input("Cantidad de actividades universitarias: "))
     if acad < 0 or hobb < 0 or soci < 0 or acti < 0:
         print("Error: No se permiten valores negativos. No se actualizaron los datos.")
+    elif acad > 10 or hobb > 10 or soci > 10 or acti > 10:
+        print("Error: Los valores deben estar entre 0 y 10. No se actualizaron los datos.")
     else:
         perfil[0] = acad
         perfil[1] = hobb
         perfil[2] = soci
         perfil[3] = acti
-        print("Perfil registrado correctamente.")
+        print("Perfil registrado correctamente para " + nombreUsuario + ".")
 
 
 # FUNCIÓN 2: Consultar valores actuales (cuadrícula)
 def consultarDatos():
     print("-------------------------")
+    if nombreUsuario != "":
+        print("  Usuario: " + nombreUsuario)
+        print("-------------------------")
     print("AC: " + str(perfil[0]) + " | HO: " + str(perfil[1]))
     print("-------------------------")
     print("SO: " + str(perfil[2]) + " | ACU: " + str(perfil[3]))
@@ -80,9 +89,10 @@ def actualizarCategoria():
     print("4) Actividades")
     cat = int(input("Seleccione la categoría: "))
     if cat >= 1 and cat <= 4:
+        print("(Valor entre 0 y 10)")
         nuevo = int(input("Ingrese el nuevo valor: "))
-        if nuevo < 0:
-            print("Error: No se permiten valores negativos.")
+        if nuevo < 0 or nuevo > 10:
+            print("Error: El valor debe estar entre 0 y 10.")
         else:
             perfil[cat - 1] = nuevo
             print("Categoría actualizada correctamente.")
@@ -108,8 +118,9 @@ def compararAfinidades():
     print("Menor afinidad: " + nombresCategorias[posMenor] + " (" + str(menor) + ")")
 
 
-# FUNCIÓN 5: Guardar o cargar datos
+# FUNCIÓN 5: Guardar o cargar datos (incluye nombre)
 def guardarCargarDatos():
+    global nombreUsuario
     print(" ")
     print("1) Guardar datos en archivo")
     print("2) Cargar datos desde archivo")
@@ -117,7 +128,7 @@ def guardarCargarDatos():
     if accion == 1:
         nombre = input("Nombre del archivo (ej: perfil.txt): ")
         archivo = open(nombre, "w")
-        linea = str(perfil[0]) + "," + str(perfil[1]) + "," + str(perfil[2]) + "," + str(perfil[3])
+        linea = nombreUsuario + "," + str(perfil[0]) + "," + str(perfil[1]) + "," + str(perfil[2]) + "," + str(perfil[3])
         archivo.write(linea)
         archivo.close()
         print("Datos guardados en " + nombre)
@@ -129,10 +140,11 @@ def guardarCargarDatos():
             contenido = archivo.read()
             #separa el texto por comas en las listas
             lista = contenido.split(",")
-            val0 = int(lista[0])
-            val1 = int(lista[1])
-            val2 = int(lista[2])
-            val3 = int(lista[3])
+            nombreUsuario = lista[0]
+            val0 = int(lista[1])
+            val1 = int(lista[2])
+            val2 = int(lista[3])
+            val3 = int(lista[4])
             if val0 < 0 or val1 < 0 or val2 < 0 or val3 < 0:
                 print("Error: El archivo contiene valores negativos. No se actualizaron los datos.")
             else:
@@ -140,7 +152,7 @@ def guardarCargarDatos():
                 perfil[1] = val1
                 perfil[2] = val2
                 perfil[3] = val3
-                print("Datos cargados desde " + nombre)
+                print("Datos cargados desde " + nombre + " para " + nombreUsuario)
             archivo.close()
         else:
             print("Error: El archivo " + nombre + " no existe.")
@@ -185,7 +197,10 @@ def compararConPerfiles():
             menorDiferencia = diferencia
             nombreMasAfin = nombresEstudiantes[i]
     print(" ")
-    print("Tienes más afinidad con: " + nombreMasAfin)
+    if nombreUsuario != "":
+        print(nombreUsuario + ", tienes más afinidad con: " + nombreMasAfin)
+    else:
+        print("Tienes más afinidad con: " + nombreMasAfin)
     print("Diferencia total: " + str(menorDiferencia))
 
 
@@ -219,7 +234,10 @@ def graficar():
     plt.bar(x, y, color=["#2196F3", "#4CAF50", "#FF9800", "#E91E63"])
     plt.xlabel("Categorías")
     plt.ylabel("Cantidad")
-    plt.title("Perfil Campus Connect")
+    titulo = "Perfil Campus Connect"
+    if nombreUsuario != "":
+        titulo = "Perfil de " + nombreUsuario
+    plt.title(titulo)
     plt.show()
 
 
@@ -229,19 +247,20 @@ print("10 funciones cargadas correctamente.")
 
 # Archivo de datos de prueba
 archivo = open("datos.txt", "w")
-archivo.write("4,6,3,2")
+archivo.write("Paula,4,6,3,2")
 archivo.close()
-print("Archivo datos.txt creado con valores: 4, 6, 3, 2")
+print("Archivo datos.txt creado con valores: Paula, 4, 6, 3, 2")
 print("Ubicación: " + os.path.abspath("datos.txt"))
 
 #Visualización de resultados
 # Cargar datos de ejemplo para la visualización
+nombreUsuario = "Paula"
 perfil[0] = 2
 perfil[1] = 6
 perfil[2] = 3
 perfil[3] = 2
 
-print("Perfil de ejemplo: " + str(perfil))
+print("Perfil de ejemplo - " + nombreUsuario + ": " + str(perfil))
 print()
 graficar()
 
@@ -250,6 +269,9 @@ graficar()
 while True:
     print(" ")
     print("===== CAMPUSCONNECT =====")
+    if nombreUsuario != "":
+        print("  Usuario: " + nombreUsuario)
+    print("=========================")
     print("1) Registrar valores iniciales")
     print("2) Consultar valores actuales")
     print("3) Actualizar una categoría")
@@ -261,6 +283,7 @@ while True:
     print("9) Cambio aleatorio")
     print("10) Graficar perfil")
     print("11) Salir")
+    print("(Los valores de las categorías deben estar entre 0 y 10)")
 
     opcion = int(input("Seleccione una opción: "))
 
