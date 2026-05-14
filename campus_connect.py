@@ -1,19 +1,11 @@
-#grafico a color
 import matplotlib.pyplot as plt
-#genera datos aleatorios
 import random
-#lee archivos
 import os
 
-#se usa para mostrar el grafico
 import matplotlib
 matplotlib.use('TkAgg')
 
 print("Librerías importadas correctamente.")
-
-
-
-# Variables globales y datos
 
 # ----------------------------------------
 # LISTA PRINCIPAL DEL PERFIL
@@ -29,7 +21,6 @@ nombresCategorias = ["Académicos", "Hobbies", "Sociales", "Actividades"]
 
 # Perfiles de otros estudiantes para comparar
 nombresEstudiantes = ["Ana", "Carlos", "Lucía", "Mateo", "Sofía"]
-#matrix (listas dentro lista)
 perfilesEstudiantes = [
     [5, 3, 7, 4],
     [2, 6, 4, 5],
@@ -40,9 +31,6 @@ perfilesEstudiantes = [
 
 print("Variables inicializadas. Perfil: " + str(perfil))
 print("Estudiantes disponibles: " + str(nombresEstudiantes))
-
-
-# Funciones del sistema
 
 # FUNCIÓN 1: Registrar valores iniciales
 def registrarDatos():
@@ -134,11 +122,9 @@ def guardarCargarDatos():
         print("Datos guardados en " + nombre)
     elif accion == 2:
         nombre = input("Nombre del archivo (ej: perfil.txt): ")
-        #busca si hay archivos guardados con este nombre
         if os.path.exists(nombre):
             archivo = open(nombre, "r")
             contenido = archivo.read()
-            #separa el texto por comas en las listas
             lista = contenido.split(",")
             nombreUsuario = lista[0]
             val0 = int(lista[1])
@@ -205,7 +191,6 @@ def compararConPerfiles():
 
 
 # FUNCIÓN 8: Duplicar todos los valores (ciclo for)
-#cada resultado se duplica , osea se aumenta 2 a un rago por ej de 4 a 6
 def duplicarValores():
     for i in range(len(perfil)):
         perfil[i] = perfil[i] * 2
@@ -243,16 +228,12 @@ def graficar():
 
 print("10 funciones cargadas correctamente.")
 
-
-
-# Archivo de datos de prueba
 archivo = open("datos.txt", "w")
 archivo.write("Paula,4,6,3,2")
 archivo.close()
 print("Archivo datos.txt creado con valores: Paula, 4, 6, 3, 2")
 print("Ubicación: " + os.path.abspath("datos.txt"))
 
-#Visualización de resultados
 # Cargar datos de ejemplo para la visualización
 nombreUsuario = "Paula"
 perfil[0] = 2
@@ -264,8 +245,6 @@ print("Perfil de ejemplo - " + nombreUsuario + ": " + str(perfil))
 print()
 graficar()
 
-
-#Menu Principal
 while True:
     print(" ")
     print("===== CAMPUSCONNECT =====")
